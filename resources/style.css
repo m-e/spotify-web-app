@@ -1,0 +1,269 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*Fonts*/
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+/*Normal CSS*/
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #d2d2d2;
+}
+
+#header{
+    color:#ffffff;
+    position:relative;
+    width: 100%;
+    min-width: 800px;
+    height: 50px;
+    background-color:#f25d23;
+}
+#header h2{
+    line-height:50px;
+    clear: both;
+    text-align: left;
+    margin-left:10%;
+}
+
+#content {
+    margin: 10px auto 0 auto;
+    width: 80%;
+    min-width: 800px;
+    z-index: -1;
+}
+
+#search {
+    display: none;
+    overflow: hidden;
+    color:#000000;
+    background-color:#f25d23;
+    position: absolute;
+    right: 5%;
+    top: 40px;
+    border: 10px solid #222;
+    max-width: 700px;
+    max-height: 347px;
+    z-index: 1;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#searchbox {
+    position: absolute;
+    right: 100px;
+    top: 8px;
+    padding: 5px;
+    float: right;
+    z-index:2;
+    height: 25px;
+    line-height: 25px;
+}
+#searchinput{
+    padding: 0 5px 0 5px;
+}
+#search-results {
+    display: inline;
+    clear: both;
+    padding: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    overflow-y: scroll;
+    z-index: 1;
+    min-width: 200px;
+}
+#search-results label{
+    color: #ffffff;
+    position:relative;
+    bottom: 10px;
+    left: 10px;
+}
+#search-results-table{
+    width: 100%;
+}
+#search-results-table_info{
+    color:#ffffff;
+    position:relative;
+    top: 10px;
+    left: 10px;
+
+}
+#search-results-table_paginate{
+    color:#ffffff;
+    position:relative;
+    top: 10px;
+    right: 10px;
+}
+.box{
+    position: relative;
+    clear:both;
+    width: 100%;
+    min-width: 800px;
+    overflow: hidden;
+    margin: 25px auto 0 auto;
+    border-radius: 0.8em;
+}
+.votebox{
+    position: absolute;
+    right: 0;
+    padding-right: 5px;
+    overflow:hidden;
+    height: 25px;
+    line-height: 25px;
+}
+.even .votebox{
+    background-position: 0px 50px;
+}
+.votebtn {
+    background: transparent ;
+    border: none;
+    width:16px;
+    height: 100%;
+    padding: 0;
+    cursor: pointer;
+    position:relative;
+}
+.votebtn:hover{
+    top: 1px;
+}
+.votedown {
+    background: url('imgs/arrow_down_16x16.png') center center no-repeat;
+}
+.voteup {
+    background: url('imgs/arrow_up_16x16.png') center center no-repeat;
+}
+.addsong {
+    float: right;
+    color: #ff8400;
+   	border: 1px solid #ff8400;
+}
+.score {
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    width: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+#search button {
+    width: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	padding: 2px 4px;
+	background: -moz-linear-gradient(
+		top,
+		#ffffff 0%,
+		#ffffff 50%,
+		#d6d6d6);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#ffffff),
+		color-stop(0.50, #ffffff),
+		to(#d6d6d6));
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,1);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,1);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,1);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.1),
+		0px 1px 0px rgba(255,255,255,1);
+  cursor: pointer;
+}
+
+.dataTables_info {
+    display: inline;
+}
+.dataTables_paginate {
+    float: right;
+    display: inline;    
+}
+.dataTables_paginate a {
+    padding: 5px;
+}
+
+th {
+    background: url('list-header.png');
+    font: bold 9px 'Helvetica Neue',Arial,sans-serif;
+    text-shadow: 0 1px 0 white;
+    text-transform: uppercase;
+    line-height: 22px;
+}
+thead tr:first-child{
+    height: 22px !important;
+}
+tr{
+    height: 25px;
+}
+tr, .votebox {
+    background: url('list-item.png') 0px 0px;
+}
+
+td {
+    height: 25px;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+tr.even {
+    background-position: 0px 50px;
+}
+
+.selected {
+    background-position: 0px 25px !important;
+}
+
+#footer {
+    height : 50px;
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto 0 auto ;
+    width: 100%;
+    min-width: 800px;
+    text-align: center;
+    padding-top: 20px;
+    clear: both;
+    font-size: 10px;
+}
