@@ -5,6 +5,9 @@
  * @copyright 2012
  */
 
+header('Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0');
+header('Pragma: no-cache');
+
 ?>
 <!DOCTYPE HTML>
 <head>

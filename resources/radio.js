@@ -18,6 +18,14 @@ function updateSearch(search) {
     });
 }
 
+//jQuery uses colons for other functions. We need to remove them from our IDs
+function sanitizeID(ID) {
+    return ID.replace('/\:/g','---');
+}
+function unsanitizeID(ID) {
+    return ID.replace(new RegExp('---', 'g'), ':');
+}
+
 //There are a whole bunch of tracks that aren't available in the UK, and Spotify is a scumbag and won't let me filter the API
 function filterGB(data) {
     for(d in data.tracks) {
@@ -34,12 +42,13 @@ function showTracks(data) {
     var current = 0;
     for(t in data.tracks) {
         row = (row === 'even') ? 'odd' : 'even';
-        html += "<tr id='" + data.tracks[t].href + "' class='row" + row + "'><td>" + data.tracks[t].name + "</td><td>" + data.tracks[t].artists[0].name + "</td><td>";
+        html += "<tr id='" + sanitizeID(data.tracks[t].href) + "' class='row" + row + "'><td>" + data.tracks[t].name + "</td><td>" + data.tracks[t].artists[0].name + "</td><td>";
         html += "<span class='popularity'><span class='popularity-value' style='width=\"" + data.tracks[t].popularity*100 + "%\"'></span></span></td><td>";
         html += data.tracks[t].length + "</td><td>" + data.tracks[t].album.name + "</td></tr>";
         if(current++ > limit) break;
     }
     html += "</tbody></table>";
+    $(html);
 
     $('#search-results').html(html);
     showSearch();
@@ -103,12 +112,10 @@ function vote(direction, id) {
         type: "GET",
         url: "vote.php",
         data: {
-            track: id,
+            track: unsanitizeID(id),
             direction: direction
         },
         success: function(votedata) {
-            console.log(votedata);
-            alert(votedata);
             $('#score-' + id).html(votedata);
         },
         failure: function() {

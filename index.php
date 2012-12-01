@@ -58,11 +58,11 @@ if(count($VotingTracks)) {
                 <td><span class="popularity"><span class="popularity-value" style="width: <?=$VT['Popularity']*100?>%;"></span></span></td>
                 <td><?=display_str($VT['Album'])?></td>
                 <td class="votebox">
-                    <a href="#" onclick="vote(0,'<?=$VT['trackid']?>')">
+                    <a href="#" onclick="vote(0,'<?=sanitizeID($VT['trackid'])?>')">
                         <button class="votedown votebtn"></button>
                     </a>
-                    <span id="score-<?=$VT['trackid']?>" class="score"><?=$VT['Score']?></span>
-                    <a href="#" onclick="vote(1,'<?=$VT['trackid']?>')">
+                    <span id="score-<?=sanitizeID($VT['trackid'])?>" class="score"><?=$VT['Score']?></span>
+                    <a href="#" onclick="vote(1,'<?=sanitizeID($VT['trackid'])?>')">
                         <button class="voteup votebtn"></button>
                     </a>
                 </td>
