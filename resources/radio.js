@@ -36,7 +36,7 @@ function formatTime(time) {
         minutes++;
         time -= 60;
     }
-    round(time);
+    Math.round(time);
     
     if(time < 10) time = '0' + time;
     
