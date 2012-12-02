@@ -26,6 +26,28 @@ function unsanitizeID(ID) {
     return ID.replace(new RegExp('---', 'g'), ':');
 }
 
+function formatTime(time) {
+    var hours, minutes, seconds = 0;
+    while(time > 60*60) {
+        hours++;
+        time -= 60*60;
+    }
+    while(time > 60) {
+        minutes++;
+        time -= 60;
+    }
+    round(time);
+    
+    if(time < 10) time = '0' + time;
+    
+    if(hours > 0) {
+        if(minutes < 10) minutes = '0' + minutes;
+        return hours + ':' + minutes + ':' + time;
+    } else {
+        return minutes + ':' + time
+    }
+}
+
 //There are a whole bunch of tracks that aren't available in the UK, and Spotify is a scumbag and won't let me filter the API
 function filterGB(data) {
     for(d in data.tracks) {
@@ -44,7 +66,7 @@ function showTracks(data) {
         row = (row === 'even') ? 'odd' : 'even';
         html += "<tr id='" + sanitizeID(data.tracks[t].href) + "' class='row" + row + "'><td>" + data.tracks[t].name + "</td><td>" + data.tracks[t].artists[0].name + "</td><td>";
         html += "<span class='popularity'><span class='popularity-value' style='width=\"" + data.tracks[t].popularity*100 + "%\"'></span></span></td><td>";
-        html += data.tracks[t].length + "</td><td>" + data.tracks[t].album.name + "</td></tr>";
+        html += formatTime(data.tracks[t].length) + "</td><td>" + data.tracks[t].album.name + "</td></tr>";
         if(current++ > limit) break;
     }
     html += "</tbody></table>";
@@ -55,6 +77,10 @@ function showTracks(data) {
     $('#search-results-table').dataTable({
         "bFilter": false
     });
+    addTableEvents();
+}
+
+function addTableEvents() {
     $('#search-results-table tbody tr').on('dblclick', function() {
         addSong($(this).attr('id'));
         $(this).off('dblclick');
