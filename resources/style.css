@@ -134,6 +134,9 @@ body {
     margin: 25px auto 0 auto;
     border-radius: 0.8em;
 }
+.box table {
+    width: 100%;
+}
 .votebox{
     position: absolute;
     right: 0;
