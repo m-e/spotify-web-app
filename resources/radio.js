@@ -27,7 +27,9 @@ function unsanitizeID(ID) {
 }
 
 function formatTime(time) {
-    var hours, minutes, seconds = 0;
+    var hours = 0
+    var minutes = 0
+    var seconds = 0;
     while(time > 60*60) {
         hours++;
         time -= 60*60;
@@ -36,7 +38,7 @@ function formatTime(time) {
         minutes++;
         time -= 60;
     }
-    Math.round(time);
+    time = Math.round(time);
     
     if(time < 10) time = '0' + time;
     
@@ -44,7 +46,7 @@ function formatTime(time) {
         if(minutes < 10) minutes = '0' + minutes;
         return hours + ':' + minutes + ':' + time;
     } else {
-        return minutes + ':' + time
+        return minutes + ':' + time;
     }
 }
 
