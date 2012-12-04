@@ -75,7 +75,7 @@ body {
     border: 10px solid #222;
     max-width: 700px;
     max-height: 347px;
-    z-index: 1;
+    z-index: 2;
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
@@ -134,9 +134,34 @@ body {
     margin: 25px auto 0 auto;
     border-radius: 0.8em;
 }
+#voting-table tr {
+    position: fixed;
+    left: 100px;
+    -moz-box-shadow: 1px 1px 5px #888;
+    -webkit-box-shadow: 1px 1px 5px #888;
+    box-shadow: 1px 1px 5px #888;
+}
+.col1 {
+    width: 300px;
+}
+.col2 {
+    width: 200px;
+}
+.col3 {
+    text-align: right;
+    width: 60px;
+}
+.col4 {
+    width: 80px;
+}
+.col5 {
+    width: 150px;
+}
+.col6 {
+    width: 65px;
+}
 .votebox{
-    position: absolute;
-    right: 0;
+    text-align: center;
     padding-right: 5px;
     overflow:hidden;
     height: 25px;
@@ -224,10 +249,12 @@ a {
 
 th {
     background: url('list-header.png');
-    font: bold 9px 'Helvetica Neue',Arial,sans-serif;
+    font: bold 11px 'Helvetica Neue',Arial,sans-serif;
     text-shadow: 0 1px 0 white;
     text-transform: uppercase;
     line-height: 22px;
+    padding: 0 5px;
+    text-align: left;
 }
 thead tr:first-child{
     height: 22px !important;
@@ -241,7 +268,7 @@ tr, .votebox {
 
 td {
     height: 25px;
-    padding: 0 5px 0 5px;
+    padding: 0 5px;
     vertical-align: middle;
     overflow: hidden;
     white-space: nowrap;

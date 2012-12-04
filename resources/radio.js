@@ -17,6 +17,62 @@ function updateSearch(search) {
        }
     });
 }
+//Controller function managing all movements. The only one that needs to be called
+function moveRow(id, distance) {
+    var o = $('#' + id);
+    o.css('z-index', 1);
+    lift(o, distance);
+}
+function lift(o, distance) {
+    o.animate({
+        top: (parseInt(o.css('top')) - 2) + 'px',
+        left: (parseInt(o.css('left')) - 2) + 'px'
+    }, {
+        duration: 200,
+        queue: false,
+        complete: function() {
+            moveUp(o, distance);
+            moveRows(o, distance);
+        }
+    });
+}
+function moveRows(o, total) {
+    var rows = o.prevAll().each(function(e) {
+        console.log(this);
+        $(this).animate({
+            top: (parseInt($(this).css('top')) + 25) + 'px'
+        }, {
+            duration: 300,
+            queue: false
+        });
+    });
+}
+
+function moveUp(o, distance) {
+    o.animate({
+        top: (parseInt(o.css('top')) - 25*distance)
+    }, {
+        duration: 800,
+        queue: false,
+        complete: function() {
+            drop(o);
+        }
+    });
+}
+
+function drop(o) {
+    o.animate({
+        top: (parseInt(o.css('top')) + 2) + 'px',
+        left: (parseInt(o.css('left')) + 2) + 'px'
+    }, {
+        duration: 200,
+        queue: false,
+        complete: function() {
+            o.css('z-index', 0);
+            reloadTable();
+        }
+    });
+}
 
 //jQuery uses colons for other functions. We need to remove them from our IDs
 function sanitizeID(ID) {
@@ -121,13 +177,11 @@ function addSong(songid) {
         type: "GET",
         url: "ajax.php",
         data: {
+            action: 'add',
             track: songid
         },
         success: function(data){
             alert('track added');
-        },
-        failure: function(){
-            alert('an error occured');
         }
     })
 }
@@ -138,16 +192,27 @@ function vote(direction, id) {
     console.log(id + ' Voting: ' + direction);
     $.ajax({
         type: "GET",
-        url: "vote.php",
+        url: "ajax.php",
         data: {
+            action: 'vote',
             track: unsanitizeID(id),
             direction: direction
         },
         success: function(votedata) {
             $('#score-' + id).html(votedata);
-        },
-        failure: function() {
-            alert('An error occured');
         }
     })
-}	
+}
+
+function reloadTable() {
+    $.ajax({
+        type: "GET",
+        url: "ajax.php",
+        data: {
+            action: 'table'
+        },
+        success: function(table) {
+            $('#table-container').html(table);
+        }
+    })
+}
