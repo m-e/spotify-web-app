@@ -5,6 +5,9 @@
  * @copyright 2012
  */
 
+header('Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0');
+header('Pragma: no-cache');
+
 ?>
 <!DOCTYPE HTML>
 <head>
@@ -19,6 +22,7 @@
     <script type="text/javascript" src="<?=RESOURCE_DIR?>radio.js"></script>
     <script type="text/javascript" src="<?=RESOURCE_DIR?>jquery.dataTables.js"></script>
     <script type="text/javascript" src="<?=RESOURCE_DIR?>jquery-ui-1.9.1.custom.min.js"></script>
+    <script type="text/javascript" src="<?=RESOURCE_DIR?>boxshadow-hooks.js"></script>
     
 </head>
 <body>

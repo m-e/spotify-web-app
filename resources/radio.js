@@ -17,6 +17,94 @@ function updateSearch(search) {
        }
     });
 }
+//Controller function managing all movements. The only one that needs to be called
+function moveRow(id, distance) {
+    var o = $('#' + id);
+    o.css('z-index', 1);
+    lift(o, distance);
+}
+function lift(o, distance) {
+    o.animate({
+        top: (parseInt(o.css('top')) - 2) + 'px',
+        left: (parseInt(o.css('left')) - 2) + 'px'
+    }, {
+        duration: 200,
+        queue: false,
+        complete: function() {
+            moveUp(o, distance);
+            moveRows(o, distance);
+        }
+    });
+}
+function moveRows(o, total) {
+    var rows = o.prevAll().each(function(e) {
+        console.log(this);
+        $(this).animate({
+            top: (parseInt($(this).css('top')) + 25) + 'px'
+        }, {
+            duration: 300,
+            queue: false
+        });
+    });
+}
+
+function moveUp(o, distance) {
+    o.animate({
+        top: (parseInt(o.css('top')) - 25*distance)
+    }, {
+        duration: 800,
+        queue: false,
+        complete: function() {
+            drop(o);
+        }
+    });
+}
+
+function drop(o) {
+    o.animate({
+        top: (parseInt(o.css('top')) + 2) + 'px',
+        left: (parseInt(o.css('left')) + 2) + 'px'
+    }, {
+        duration: 200,
+        queue: false,
+        complete: function() {
+            o.css('z-index', 0);
+            reloadTable();
+        }
+    });
+}
+
+//jQuery uses colons for other functions. We need to remove them from our IDs
+function sanitizeID(ID) {
+    return ID.replace('/\:/g','---');
+}
+function unsanitizeID(ID) {
+    return ID.replace(new RegExp('---', 'g'), ':');
+}
+
+function formatTime(time) {
+    var hours = 0
+    var minutes = 0
+    var seconds = 0;
+    while(time > 60*60) {
+        hours++;
+        time -= 60*60;
+    }
+    while(time > 60) {
+        minutes++;
+        time -= 60;
+    }
+    time = Math.round(time);
+    
+    if(time < 10) time = '0' + time;
+    
+    if(hours > 0) {
+        if(minutes < 10) minutes = '0' + minutes;
+        return hours + ':' + minutes + ':' + time;
+    } else {
+        return minutes + ':' + time;
+    }
+}
 
 //There are a whole bunch of tracks that aren't available in the UK, and Spotify is a scumbag and won't let me filter the API
 function filterGB(data) {
@@ -34,18 +122,23 @@ function showTracks(data) {
     var current = 0;
     for(t in data.tracks) {
         row = (row === 'even') ? 'odd' : 'even';
-        html += "<tr id='" + data.tracks[t].href + "' class='row" + row + "'><td>" + data.tracks[t].name + "</td><td>" + data.tracks[t].artists[0].name + "</td><td>";
+        html += "<tr id='" + sanitizeID(data.tracks[t].href) + "' class='row" + row + "'><td>" + data.tracks[t].name + "</td><td>" + data.tracks[t].artists[0].name + "</td><td>";
         html += "<span class='popularity'><span class='popularity-value' style='width=\"" + data.tracks[t].popularity*100 + "%\"'></span></span></td><td>";
-        html += data.tracks[t].length + "</td><td>" + data.tracks[t].album.name + "</td></tr>";
+        html += formatTime(data.tracks[t].length) + "</td><td>" + data.tracks[t].album.name + "</td></tr>";
         if(current++ > limit) break;
     }
     html += "</tbody></table>";
+    $(html);
 
     $('#search-results').html(html);
     showSearch();
     $('#search-results-table').dataTable({
         "bFilter": false
     });
+    addTableEvents();
+}
+
+function addTableEvents() {
     $('#search-results-table tbody tr').on('dblclick', function() {
         addSong($(this).attr('id'));
         $(this).off('dblclick');
@@ -84,13 +177,11 @@ function addSong(songid) {
         type: "GET",
         url: "ajax.php",
         data: {
+            action: 'add',
             track: songid
         },
         success: function(data){
             alert('track added');
-        },
-        failure: function(){
-            alert('an error occured');
         }
     })
 }
@@ -101,18 +192,27 @@ function vote(direction, id) {
     console.log(id + ' Voting: ' + direction);
     $.ajax({
         type: "GET",
-        url: "vote.php",
+        url: "ajax.php",
         data: {
-            track: id,
+            action: 'vote',
+            track: unsanitizeID(id),
             direction: direction
         },
         success: function(votedata) {
-            console.log(votedata);
-            alert(votedata);
             $('#score-' + id).html(votedata);
-        },
-        failure: function() {
-            alert('An error occured');
         }
     })
-}	
+}
+
+function reloadTable() {
+    $.ajax({
+        type: "GET",
+        url: "ajax.php",
+        data: {
+            action: 'table'
+        },
+        success: function(table) {
+            $('#table-container').html(table);
+        }
+    })
+}
